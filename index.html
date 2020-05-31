@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Halløjsa</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="css/styling.css">
+  <script src="js/sms.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script src="js/tilmelding.js"></script>
+</head>
+<body>
+  <!-- start -->
+<div id="start-site">
+  <div class="container">
+    <div class="wrapper">
+<fieldset>
+<h3>Velkommen kammerat!</h3>
+<p>Vil du logge ind eller oprette en ny profil?</p>
+<form>
+  <input id="login-start" class="button" type="button" value="Login" onclick="openLogin()" />
+</form>
+<form>
+  <input id="tilmeld" class="button" type="button" value="Tilmeld" onclick="openTilmelding()" />
+</form>
+</fieldset>
+      </div>
+    </div>
+</div>
+
+
+<!-- login -->
+<div id="login-site">
+  <div class="container">
+    <div class="wrapper">
+      <fieldset>
+        <h3>Velkommen kammerat!</h3>
+        <p>Login nedenfor.</p>
+        <form action="">
+          <input class="loginFields" type="text" id="navn" name="navn" value=""placeholder="Brugernavn">
+          <input class="loginFields" type="text" id="pswrd" name="pswrd" value=""placeholder="Kodeord">
+    </fieldset>
+  </form>
+    <button onclick="login()" id="login" class="button" type="button" value="Login"> Login </button>
+    <button onclick="openStart()" id="back" class="button" type="button" > Tilbage til start </button><br>
+    </div>
+  </div>
+</div>
+
+<!--tilmelding-->
+<div id="tilmelding-site">
+  <div class="container">
+    <div class="wrapper">
+  <ul class="steps">
+    <li class="is-active">Skridt 1</li>
+    <li>Skridt 2</li>
+    <li>Skridt 3</li>
+  </ul>
+  <form class="form-wrapper">
+    <fieldset class="section is-active">
+      <h3>Dine oplysninger</h3>
+      <input type="text" name="name" id="username" placeholder="Brugernavn">
+      <input type="text" name="email" id="email" placeholder="Email">
+      <div class="button">Næste</div>
+    </fieldset>
+    <fieldset class="section">
+      <h3>Kommunistisk skole</h3>
+      <div class="row cf">
+        <div class="four col">
+          <input type="radio" name="r1" id="r1" checked>
+          <label for="r1">
+            <h4>Leninisme</h4>
+          </label>
+        </div>
+        <div class="four col">
+          <input type="radio" name="r1" id="r2"><label for="r2">
+            <h4>Marxisme</h4>
+          </label>
+        </div>
+        <div class="four col">
+          <input type="radio" name="r1" id="r3"><label for="r3">
+            <h4>Trotskisme</h4>
+          </label>
+        </div>
+      </div>
+      <div class="button">Næste</div>
+    </fieldset>
+    <fieldset class="section">
+      <h3>Vælg et password</h3>
+      <input type="password" name="password" id="password1" placeholder="Kodeord">
+      <input type="password" name="password2" id="password2" placeholder="Genindtast kodeord">
+      <progress max="100" value="0" id="strength" style="width: 230px"></progress>
+      <p><b>Krav til kodeord:</b><br>
+        Mindst 2 normaltegn; a-Z eller 1-9<br>
+        Mindst et af følgende tegn; <~>? <br>
+        Mindst et specieltegn; !-@%&^*$ <br>
+        Og en længde på mindst 5
+      </p>
+      <input onclick=opretbruger() class="submit button" type="submit" value="Sign Up">
+    </fieldset>
+    <fieldset class="section">
+      <h3>Konto oprettet!</h3>
+      <p>Din konto er nu blevet oprettet kammerat</p>
+
+      <form>
+        <input id="login-tilmelding" class="button" type="button" value="Tilbage til start" onclick="openStart()"/>
+      </form>
+    </fieldset>
+  </form>
+    </div>
+  </div>
+</div>
+
+</body>
+<script>
+var pass = document.getElementById("password1")
+pass.addEventListener('keyup', function() {
+  checkPassword(password1.value)
+})
+function checkPassword (password1) {
+  var strengthBar = document.getElementById("strength")
+  var strength=0;
+  if (password1.match(/[a-zA-Z0-9][a-zA-Z0-9]+/)) {
+    strength += 1
+  }
+  if (password1.match(/[~<>?]+/)) {
+    strength += 1
+  }
+
+  if (password1.match(/[!-@%&^*$]+/)) {
+      strength += 1
+  }
+  if (password1.length>4) {
+    strength += 1
+  }
+  switch (strength) {
+    case 0:
+      strengthBar.value = 0;
+      break;
+      case 1:
+        strengthBar.value = 20;
+        break;
+        case 2:
+          strengthBar.value = 60;
+          break;
+          case 3:
+            strengthBar.value = 80;
+            break;
+            case 4:
+              strengthBar.value = 100;
+              break;
+            }
+          }
+
+</script>
+</html>

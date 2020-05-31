@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DKP</title>
+<link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
+</head>
+<style>
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.menu:hover .menu__link:not(:hover){
+  color: darkgray;
+}
+
+.menu__list{
+  display: flex;
+  text-align: center;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.menu__group{
+  flex-grow: 1;
+}
+
+.menu__link{
+  display: block;
+}
+
+/* skin */
+
+.menu{
+  background-color: #cc0000;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24);
+}
+
+.menu__link{
+  padding: 3rem 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* hover animation */
+
+.menu__link{
+  position: relative;
+  overflow: hidden;
+
+  will-change: color;
+  transition: color .25s ease-out;
+}
+
+.menu__link::before,
+.menu__link::after{
+  content: "";
+  width: 0;
+  height: 3px;
+  background-color: #fff;
+
+  will-change: width;
+  transition: width .1s ease-out;
+
+  position: absolute;
+  bottom: 0;
+}
+
+.menu__link::before{
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.menu__link::after{
+  right: 50%;
+  transform: translateX(50%);
+}
+
+.menu__link:hover::before,
+.menu__link:hover::after{
+  width: 100%;
+  transition-duration: .2s;
+}
+
+@media (min-width: 768px){
+
+  html{
+    font-size: 62.5%;
+  }
+}
+
+@media (max-width: 767px){
+
+  html{
+    font-size: 50%;
+  }
+}
+
+body{
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Open Sans, Ubuntu, Fira Sans, Helvetica Neue, sans-serif;
+  font-size: 2rem;
+  margin: 0;
+  min-height: 1vh;
+  display: flex;
+  flex-direction: column;
+  background-color: darkgray;
+}
+
+.page{
+  box-sizing: border-box;
+  max-width: width;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  order: 1;
+  margin: auto;
+}
+.user{
+  color: #cc0000;
+}
+
+.overskrift {
+  margin-left: 375px;
+  margin-top: 20px;
+  color: #cc0000;
+  font-size: 75px;
+  font-weight: bold;
+}
+#begivnheder {
+  all: unset;
+  margin-left: 0px;
+  margin-top: 20px;
+  color: #cc0000;
+  font-size: 75px;
+  font-weight: bold;
+}
+/* FAQ */
+.wrapper2 {
+    max-width: 100%-380px*2;
+    width: 100%-380px*2;
+    margin-left: 380px;
+    margin-right: 380px;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align:center;
+}
+
+input {
+    display: none;
+}
+
+label {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    border: 3px solid #3E474F;
+    user-select: none;
+}
+
+label div:first-child {
+    width: 100%;
+    line-height: 45px;
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+
+.cross{
+    margin-right:15px;
+    margin-top:3px;
+}
+
+.cross:before,.cross:after {
+    content: '';
+    border-top: 2px solid #3E474F;
+    width: 15px;
+    display: block;
+    margin-top: 18px;
+    transition: 0.3s;
+}
+
+.cross:after {
+    transform: rotate(90deg);
+    margin-top: -2px;
+}
+
+.content {
+    box-sizing: border-box;
+    font-size: 0.9em;
+    margin: 10px 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height, .5s;
+}
+
+input:checked ~ .content {
+    max-height: 400px;
+    transition: max-height, 1s;
+}
+
+input:checked ~ label .cross:before {
+    transform: rotate(180deg);
+}
+
+input:checked ~ label .cross:after {
+    transform: rotate(0deg);
+}
+
+.questions{
+    margin-top:20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height, .5s;
+}
+
+.questions label{
+    border:none;
+    box-shadow: none;
+    margin:0;
+}
+
+input:checked ~ .questions {
+    max-height: 400px;
+    border-bottom:2px solid #3E474F;
+    transition: 1s;
+}
+
+/*----------tool-tip------------*/
+
+.tip {
+    color: #f03768;
+    cursor: help;
+    position: relative;
+    overflow: visible;
+    font-family: monospace;
+    font-size: 1.3em;
+}
+
+.tip:before,
+.tip:after {
+    position: absolute;
+    opacity: 0;
+    z-index: -100;
+    transform: translateY(-30%);
+    transition: .4s;
+}
+
+.tip:before {
+    content: '';
+    border-style: solid;
+    border-width: 0.8em 0.5em 0 0.5em;
+    border-color: #3E474F transparent transparent transparent;
+    transform: translateY(-200%);
+    bottom:90%;
+    left:50%;
+}
+
+.tip:after {
+    content: attr(data-tip);
+    background: #3E474F;
+    color: white;
+    width: 150px;
+    padding: 10px;
+    font-size: 0.8em;
+    bottom: 150%;
+    left: -50%;
+}
+
+.tip:hover:before,
+.tip:hover:after {
+    opacity: 1;
+    z-index: 100;
+    transform: scaleY(1);
+}
+
+ul ul {
+  position: absolute;
+  width: 380px;
+  background: #cc0000;
+  display: none;
+  right: 20px;
+  height: 170px;
+}
+
+ul ul li{
+  display: block;
+}
+ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 15px;
+  display: block;
+}
+#myBtn {
+  all:none;
+}
+ul li #myBtn {
+  color: #fff;
+  text-decoration: none;
+  padding: 15px;
+  display: block;
+}
+
+ul li:hover ul {
+  display: block;
+  animation: navmenu 0.6s forwards;
+}
+ul li .options:hover{
+  background: rgba(0,0,0,0.2);
+}
+
+@keyframes navmenu {
+  0% {
+    opacity: 0.1;
+    height:140px;
+  }
+  100% {
+    opacity: 1;
+    height: 170px;
+  }
+}
+button {
+  background-color: #cc0000;
+  display: inline-block;
+  padding: 10px 30px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px !important;
+  font-family: 'Open Sans', sans-serif !important;
+  border: 0;
+  margin-top:30px;
+
+}
+input[type="text"]{
+  display: block;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f1f1f1;
+  border: none;
+  width: 50%;
+  outline: none;
+  font-size: 18px !important;
+  font-family: 'Open Sans', sans-serif !important;
+  margin-bottom: auto;
+}
+textarea{
+  display: block;
+  padding: 10px;
+  padding-bottom: 0px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f1f1f1;
+  border: none;
+  width: 50%;
+  outline: none;
+  font-size: 18px !important;
+  font-family: 'Open Sans', sans-serif !important;
+  word-wrap: break-all;
+  resize: none;
+  overflow: hidden;
+}
+/*Modal*/
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fff;
+  margin: auto;
+  padding: 0;
+  border: none;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #cc0000;
+  color: white;
+}
+
+.modal-body {
+  padding: 2px 16px;
+  word-wrap: normal;
+}
+
+/* Feed */
+.feed p {
+  p {
+  font-family: 'Space Mono', monospace;
+  }
+}
+
+.opslag {
+  min-height: 1000px:
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding: 60px;
+  margin: 10px;
+  background-color: lightgray;
+  margin-left: 15%;
+  margin-right: 15%;
+
+}
+.text {
+  margin-left: 15px;
+}
+.carousel-wrapper{
+  height:600px;
+  position:relative;
+  width:1200px;
+  margin:0 auto;
+}
+.carousel-item{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:25px 50px;
+  opacity:0;
+  transition: all 0.5s ease-in-out;
+  color: white;
+}
+.arrow{
+  border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 12px;
+}
+
+.arrow-prev{
+  left:-30px;
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%) rotate(135deg);
+}
+
+.arrow-next{
+    right:-30px;
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%) rotate(-45deg);
+  }
+
+.light{
+  color:white;
+}
+
+@media (max-width: 480px) {
+      .arrow, .light .arrow {
+        background-size: 10px;
+        background-position: 10px 50%;
+      }
+    }
+}
+
+/*Væler alle elementer*/
+[id^="item"] {
+    display: none;
+  }
+
+.item-1 {
+    z-index: 2;
+    opacity: 1;
+  background:url('billeder/1.JPG');
+  background-size:cover;
+  }
+.item-2{
+  background:url('billeder/2.JPG');
+   background-size:cover;
+}
+.item-3{
+  background:url('billeder/3.JPG');
+   background-size:cover;
+}
+
+*:target ~ .item-1 {
+    opacity: 0;
+  }
+
+#item-1:target ~ .item-1 {
+    opacity: 1;
+  }
+
+#item-2:target ~ .item-2, #item-3:target ~ .item-3 {
+    z-index: 3;
+    opacity: 1;
+  }
+}
+
+#opslag-tekst {
+  padding-bottom: 300px;
+  overflow-wrap: normal;
+}
+
+#opslag-knap{
+  margin: 10px;
+}
+
+#myBtn{
+  cursor:pointer;
+}
+</style>
+<script src="js/sms.js"></script>
+<body>
+
+  <div class="page">
+    <nav class="menu">
+      <ul class="menu__list">
+        <li class="menu__group"><a href="#0" class="menu__link">Hjem</a></li>
+        <li class="menu__group"><a href="#faq" class="menu__link">FAQ</a></li>
+        <li class="menu__group"><a href="#begivnheder" class="menu__link">Begivenheder</a></li>
+        <li class="menu__group"><a href="https://www.facebook.com/groups/348590125504195" class="menu__link">Kontakt</a></li>
+        <li class="menu__group"><a href="#0" class="menu__link">Din konto </a>
+          <ul>
+              <li><a class="options" href="#">Log Ud</a></li>
+              <li><a class="options" id="myBtn">Lav et nyt opslag</a></li>
+              <li><a class="options" href="#">Ændr dine konto indstilinger</a></li>
+            </ul>
+        </li>
+      </ul>
+    </nav>
+
+
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Lav et opslag</h2>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="user" placeholder="Brugernavn">
+          <!-- <input type="text" id="text" placeholder="Dit opslag"> -->
+          <textarea name="text" id="text" rows="8" cols="80" placeholder="Dit opslag"></textarea>
+          <button id="opslag-knap" type="button" onclick="nyOpslag()">Læg opslag op</button>
+        </div>
+      </div>
+    </div>
+
+<!-- Opslag -->
+<div id="feed">
+    <div class="opslag">
+      <div class="user">
+        <p>Vladimir Lenin - (Leninist)</p>
+      </div>
+      <div class="text">
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac tellus in purus porttitor fermentum id at ex. Duis felis ligula, dignissim vel orci vel, semper luctus urna. Fusce imperdiet laoreet quam sit amet convallis. Ut malesuada justo eu mauris porta vehicula. Duis posuere ut justo id imperdiet. Nulla semper mi ut arcu egestas mollis. Aliquam eu fermentum urna. In tincidunt nunc tellus, in eleifend ligula accumsan non. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ultricies aliquet nunc, quis egestas erat efficitur vitae. Sed tempus lacinia enim nec euismod. Nulla hendrerit risus tempus, finibus dui nec, tincidunt diam. Aenean ut scelerisque ligula. Donec vitae ultricies elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur enim nisi, blandit vel nibh ac, pellentesque molestie nisi. Sed consequat dolor sapien. Nam lorem lorem, vehicula non nunc et, dictum dictum lacus. Maecenas mollis ex ipsum, at euismod mi malesuada sit amet. Proin enim tortor, rhoncus et turpis quis, condimentum maximus metus. Pellentesque tempor velit sit amet justo blandit dapibus. Praesent imperdiet ullamcorper dapibus. Sed odio est, dapibus malesuada pharetra et, efficitur ut leo. Vivamus egestas, augue sed iaculis sollicitudin, leo tellus tempor quam, rutrum malesuada justo nisl sed purus. Vivamus maximus risus vitae diam porta, non ornare nulla porttitor. Nam aliquet justo metus, ac vulputate eros egestas id. Donec congue odio et interdum rhoncus. Nulla nisi ex, rutrum a ipsum nec, molestie rhoncus risus. Pellentesque dignissim, nisi ac vehicula tempus, tortor elit malesuada mauris, et dapibus arcu libero vel urna. Sed quis arcu arcu. Duis cursus enim id justo tincidunt sagittis. Sed quis ultrices tortor, in mollis mi. Vestibulum ac mattis orci.Nunc pellentesque justo vitae consectetur pretium. Nunc sapien massa, euismod sed semper sit amet, egestas eu tellus. Fusce vulputate ante sit amet sapien fermentum convallis. Quisque euismod tempor dolor ut tincidunt. Donec tempus felis a magna maximus tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue leo ut libero aliquet consectetur. Nam sit amet pharetra eros. Maecenas erat nunc, aliquam sed lectus id, faucibus egestas massa. Suspendisse placerat auctor dolor id sodales. Aliquam sodales, urna at egestas congue, dui tellus vestibulum ex, eu condimentum mi lectus at odio. Donec nec porttitor diam, at sodales tellus. Quisque id sapien sit amet neque ullamcorper faucibus a non enim. Morbi dictum sit amet nisi tristique vehicula. Suspendisse potenti. Fusce in aliquam sem. Sed eget nisl tempor, interdum felis ac, venenatis ante. Nullam lobortis consequat erat, at fermentum est sagittis sed. Sed mattis imperdiet est, at eleifend est.
+</p>
+</div>
+</div>
+  <div class="opslag">
+    <div class="user">
+      <p>Karl Marx - (Marxist)</p>
+    </div>
+    <div class="text">
+    <p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac tellus in purus porttitor fermentum id at ex. Duis felis ligula, dignissim vel orci vel, semper luctus urna. Fusce imperdiet laoreet quam sit amet convallis. Ut malesuada justo eu mauris porta vehicula. Duis posuere ut justo id imperdiet. Nulla semper mi ut arcu egestas mollis. Aliquam eu fermentum urna. In tincidunt nunc tellus, in eleifend ligula accumsan non. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ultricies aliquet nunc, quis egestas erat efficitur vitae. Sed tempus lacinia enim nec euismod. Nulla hendrerit risus tempus, finibus dui nec, tincidunt diam. Aenean ut scelerisque ligula. Donec vitae ultricies elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur enim nisi, blandit vel nibh ac, pellentesque molestie nisi. Sed consequat dolor sapien. Nam lorem lorem, vehicula non nunc et, dictum dictum lacus. Maecenas mollis ex ipsum, at euismod mi malesuada sit amet. Proin enim tortor, rhoncus et turpis quis, condimentum maximus metus. Pellentesque tempor velit sit amet justo blandit dapibus. Praesent imperdiet ullamcorper dapibus. Sed odio est, dapibus malesuada pharetra et, efficitur ut leo. Vivamus egestas, augue sed iaculis sollicitudin, leo tellus tempor quam, rutrum malesuada justo nisl sed purus. Vivamus maximus risus vitae diam porta, non ornare nulla porttitor. Nam aliquet justo metus, ac vulputate eros egestas id. Donec congue odio et interdum rhoncus. Nulla nisi ex, rutrum a ipsum nec, molestie rhoncus risus. Pellentesque dignissim, nisi ac vehicula tempus, tortor elit malesuada mauris, et dapibus arcu libero vel urna. Sed quis arcu arcu. Duis cursus enim id justo tincidunt sagittis. Sed quis ultrices tortor, in mollis mi. Vestibulum ac mattis orci.Nunc pellentesque justo vitae consectetur pretium. Nunc sapien massa, euismod sed semper sit amet, egestas eu tellus. Fusce vulputate ante sit amet sapien fermentum convallis. Quisque euismod tempor dolor ut tincidunt. Donec tempus felis a magna maximus tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue leo ut libero aliquet consectetur. Nam sit amet pharetra eros. Maecenas erat nunc, aliquam sed lectus id, faucibus egestas massa. Suspendisse placerat auctor dolor id sodales. Aliquam sodales, urna at egestas congue, dui tellus vestibulum ex, eu condimentum mi lectus at odio. Donec nec porttitor diam, at sodales tellus. Quisque id sapien sit amet neque ullamcorper faucibus a non enim. Morbi dictum sit amet nisi tristique vehicula. Suspendisse potenti. Fusce in aliquam sem. Sed eget nisl tempor, interdum felis ac, venenatis ante. Nullam lobortis consequat erat, at fermentum est sagittis sed. Sed mattis imperdiet est, at eleifend est.
+</p>
+</div>
+</div>
+<div class="opslag">
+  <div class="user">
+    <p>Kim Jong Un - (Juche)</p>
+  </div>
+  <div class="text">
+  <p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac tellus in purus porttitor fermentum id at ex. Duis felis ligula, dignissim vel orci vel, semper luctus urna. Fusce imperdiet laoreet quam sit amet convallis. Ut malesuada justo eu mauris porta vehicula. Duis posuere ut justo id imperdiet. Nulla semper mi ut arcu egestas mollis. Aliquam eu fermentum urna. In tincidunt nunc tellus, in eleifend ligula accumsan non. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ultricies aliquet nunc, quis egestas erat efficitur vitae. Sed tempus lacinia enim nec euismod. Nulla hendrerit risus tempus, finibus dui nec, tincidunt diam. Aenean ut scelerisque ligula. Donec vitae ultricies elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur enim nisi, blandit vel nibh ac, pellentesque molestie nisi. Sed consequat dolor sapien. Nam lorem lorem, vehicula non nunc et, dictum dictum lacus. Maecenas mollis ex ipsum, at euismod mi malesuada sit amet. Proin enim tortor, rhoncus et turpis quis, condimentum maximus metus. Pellentesque tempor velit sit amet justo blandit dapibus. Praesent imperdiet ullamcorper dapibus. Sed odio est, dapibus malesuada pharetra et, efficitur ut leo. Vivamus egestas, augue sed iaculis sollicitudin, leo tellus tempor quam, rutrum malesuada justo nisl sed purus. Vivamus maximus risus vitae diam porta, non ornare nulla porttitor. Nam aliquet justo metus, ac vulputate eros egestas id. Donec congue odio et interdum rhoncus. Nulla nisi ex, rutrum a ipsum nec, molestie rhoncus risus. Pellentesque dignissim, nisi ac vehicula tempus, tortor elit malesuada mauris, et dapibus arcu libero vel urna. Sed quis arcu arcu. Duis cursus enim id justo tincidunt sagittis. Sed quis ultrices tortor, in mollis mi. Vestibulum ac mattis orci.Nunc pellentesque justo vitae consectetur pretium. Nunc sapien massa, euismod sed semper sit amet, egestas eu tellus. Fusce vulputate ante sit amet sapien fermentum convallis. Quisque euismod tempor dolor ut tincidunt. Donec tempus felis a magna maximus tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In congue leo ut libero aliquet consectetur. Nam sit amet pharetra eros. Maecenas erat nunc, aliquam sed lectus id, faucibus egestas massa. Suspendisse placerat auctor dolor id sodales. Aliquam sodales, urna at egestas congue, dui tellus vestibulum ex, eu condimentum mi lectus at odio. Donec nec porttitor diam, at sodales tellus. Quisque id sapien sit amet neque ullamcorper faucibus a non enim. Morbi dictum sit amet nisi tristique vehicula. Suspendisse potenti. Fusce in aliquam sem. Sed eget nisl tempor, interdum felis ac, venenatis ante. Nullam lobortis consequat erat, at fermentum est sagittis sed. Sed mattis imperdiet est, at eleifend est.
+</p>
+</div>
+</div>
+<h2 class="overskrift" id="faq">FAQ</h2>
+<div class="wrapper2">
+
+ <!-- Første tab-->
+  <div class="wrap-1">
+    <input type="radio" id="tab-1" name="tabs">
+    <label for="tab-1"><div>Hvad er en planøkonomi?</div><div class="cross"></div></label>
+    <div class="content">En planøkonomi er et økonomisk system, hvor produktionen (og dermed beskæftigelsen og investeringerne) og allokeringen af de fremstillede goder i et betydeligt omfang er bestemt af en produktionsplan, der omfatter hele økonomien. En planøkonomi kan være baseret på central eller decentral planlægning.</div>
+  </div>
+
+<!-- Anden tab -->
+  <div class="wrap-2">
+    <input type="radio" id="tab-2" name="tabs">
+    <label for="tab-2"><div>Hvad er forskellen på kommunisme og socialisme?</div><div class="cross"></div></label>
+    <div class="content">Kommunisme og socialisme er paraplybetegnelser, der henviser til to venstreorienterede skoler med den samme grundlæggnde økonomiske tanke; kapitalismen er skidt. Socialister kan være pro- eller antimarked. De kan betragte det endelige mål som en revolution med en afskaffelse af sociale klasser, eller de kan søge mere pragmatiske resultater: for eksempel universel sundhedsydelser eller en universel pensionsordning. Kommunisme har derimod kun et mål; at etablere et kommunistisk safmund, kendetegnet ved en socioøkonomisk struktur baseret på ideerne om fælles ejerskab af produktionsmidlerne og fraværet af sociale klasser, penge og staten. </div>
+  </div>
+
+<!-- Tredje tab -->
+  <div class="wrap-3">
+    <input type="radio" id="tab-3" name="tabs">
+    <label for="tab-3"><div>Hvilke store kommunistiske tænkere findes der?</div><div class="cross"></div></label>
+    <div class="questions">
+
+      <!-- Første spørgsmål -->
+      <div class="question-wrap">
+        <input type="radio" id="question-1" name="question">
+        <label for="question-1"><div>Vladimir Ilitj Lenin</div> <div class="cross"></div></label>
+        <div class="content">
+          Født Vladimir Ilitj Uljanov den 22. april 1870 i Simbirsk, død 21. januar 1924 i Gorki Leninskije) var den sovjetiske statsleder i perioden 6. november 1917 – 21. januar 1924 og en vigtig marxistisk revolutionær teoretiker, hvis bidrag til den marxistiske teori betegnes Leninisme. Leninisme omfatter socialistiske politiske og økonomiske teorier udviklet ud fra den ortodokse marxisme samt Lenins fortolkninger af marxistisk teori til praktisk anvendelse på de socio-politiske forhold i det agrariske tidlige 20. århundrede russiske imperium.
+        </div>
+      </div>
+
+      <!-- Anden spørgsmål -->
+      <div class="question-wrap">
+        <input type="radio" id="question-2" name="question">
+        <label for="question-2"><div>Karl Marx</div> <div class="cross"></div></label>
+        <div class="content">
+          Karl Heinrich Marx (født 5. maj 1818 i Trier, død 14. marts 1883 i London) var en tysk sociolog, politisk økonom og filosof.
+          Karl Marx er, sammen med Friedrich Engels, grundlægger af, hvad han selv kaldte for, den videnskabelige socialisme. Denne socialisme tog ideologisk udgangspunkt i den såkaldte utopiske socialisme som eksempelvis blev repræsenteret ved Charles Fouriers ideer, men kombinerede denne ideologi med en økonomisk og sociologisk teori for den historiske udvikling. Marx påstod deri at samfundene udvikler sig som resultat af samfundsklassernes indbyrdes kampe om herredømmet. Denne udvikling ville ifølge teorien nå sit højeste stadie med det kommunistiske samfund, hvor proletariatet (de besiddelsesløse, arbejderklassen) havde erobret magten over produktionsmidlerne og stillet dem i hele befolkningens tjeneste. Arbejderklassen ville således afskaffe klassesamfundet. Dette skulle gøre alle mennesker lige, så alle kunne udfolde sig frit, og ingen skulle udsættes for udbytning eller undertrykkelse. Dette kommunistiske endemål havde den såkaldt videnskabelige socialisme til fælles med den utopiske socialisme, men den økonomiske og sociologiske analyse af, hvordan det skulle komme i stand, var noget nyt hos Marx og Engels. Den såkaldt videnskabelige socialisme er i eftertiden også blevet kendt under betegnelsen marxisme, et begreb som Karl Marx dog aldrig selv anvendte.
+          Karl Marx og Friedrich Engels udgav i 1848 Det Kommunistiske Manifest. Manifestet var et kampskrift, der redegjorde for de vigtigste marxistiske idéer og hvis formål var at samle socialisterne i hele verden i kampen for frihed. Manifestet blev udgivet midt i konfrontationen mellem revolutionen, der hærgede Europa og gav løfte om frihed og demokrati, og de feudale undertrykkeres forsøg på at fastholde deres eneherskersamfund. Den første socialistiske revolution i historien førte til oprettelse af Pariserkommunen i 1871, men denne blev hurtigt knust af den franske regerings styrker. Marx opnåede derfor ikke sine tanker realiseret, mens han levede.
+        </div>
+      </div>
+
+      <!-- Tredje spørgsmål -->
+        <div class="question-wrap">
+          <input type="radio" id="question-3" name="question">
+          <label for="question-3"><div>Lev Davidovitj Trotskij</div> <div class="cross"></div></label>
+          <div class="content">
+            Lev Davidovitj Trotskij; blev født 7. november 1879, og døde 21. august 1940; oprindeligt navngivet Lev Davidovitj Bronstein) var en russisk revolutionær, politisk tænker og politiker. Han var en af lederne af Oktoberrevolutionen, og regnes for dens næstkommanderende efter Lenin. Efter Lenins død i 1924 var han en af hovedkræfterne i modstanden mod Stalins politiske linje, hvilket førte til hans eksklusion fra partiet i 1927 og deportation fra Sovjetunionen i 1929. Trotskij blev myrdet i 1940 med en isøkse af den kommunistiske NKVD-agent Ramón Mercade
+          </div>
+        </div>
+    </div>
+  </div>
+
+<!-- Fjerde tab-->
+  <div class="wrap-4">
+    <input type="radio" id="tab-4" name="tabs">
+    <label for="tab-4"><div>Hvor kan du finde socialisme i verden i dag?</div><div class="cross"></div></label>
+    <div class="content">Mange vil sige at der er ikke længere findes nogen socialistiske lande i verden. Med nederlaget for den kinesiske revolution i 1976 i mod de kapitalistiske styrker, sluttede den første fase af den kommunistiske revolution.</div>
+    <div class="questions">
+
+      <!-- Første spørgsmål -->
+      <div class="question-wrap">
+        <input type="radio" id="question-4" name="question">
+        <label for="question-4"><div>Nord Korea</div> <div class="cross"></div></label>
+        <div class="content">
+          Nord Korea har en unik ideologi kaldt "juche" eller "Selforsyning", som handler om at kunne isolere sig fra omverdenen så meget som muligt. På den 27 December 1990 holdte den daværende leder i Nord Korea Kim Jong-il en tale som han kaldte; "Socialisme i vores land er en socialisme af vores stil hører under Juche-ideen". I talen gav han opbakning til socialisme og nævnte at Nord Korea ikke vil møde de samme blokeringer som kunne ses i Øst europa på denne tid fordi Nord Korea er et "et tilbagestående, kolonialt semifeudalt samfund". Der ses mange kendetegn fra socialisme i den Nord Koreanske ideologi, men den korrekte betegnelse er altså "Juche"
+      </div>
+    </div>
+    <div class="question-wrap">
+      <input type="radio" id="question-5" name="question">
+      <label for="question-5"><div>Cuba</div> <div class="cross"></div></label>
+      <div class="content">
+        Cuba er nok det land som er nemmest at argumentere for at være socialistisk. I Cubas forfatning fra 1992 står der at landet er "styret af idéerne fra José Martí og de politiske og sociale ideer fra Marx, Engels og Lenin.".
+    </div>
+  </div>
+  <div class="question-wrap">
+    <input type="radio" id="question-6" name="question">
+    <label for="question-6"><div>Kina</div> <div class="cross"></div></label>
+    <div class="content">
+      Kina er et land som er regeret af et parti som hedder det kommunistiske parti i Kina. Partiet har gennemgået dramatiske ændringer gennem årene, især under Deng Xiaopings ledelse. Mens udenlandske kommentatorer har beskyldt det kommunistiske parti i Kina (CPC) for manglende en sammenhængende ideologi, identificerer CPC sig stadig som et kommunistisk parti. I dag er landet overvejende præget af unikt princip som de kalder "en socialistisk markedsøkonomi", som bedst kan beskrives som en integration af de grundlæggende elementer af marxismen kombineret med et fokus på at modernisere Kina.
+  </div>
+</div>
+</div>
+
+<!-- Femte tab-->
+  <div class="wrap-4">
+    <input type="radio" id="tab-5" name="tabs">
+    <label for="tab-5"><div>Hvad er proletariatet og bourgeoisiet?</div><div class="cross"></div></label>
+    <div class="content">
+      Proletariatet er i marxistisk teori en klasse af mennesker der ikke ejer produktionsmidler og derfor må leve af at sælge deres arbejdskraft. <br>
+      Bourgeoisiet er den velstillede del af samfundet; det bedre borgerskab. <br>
+      Kort sagt er proletariatet dem som bliver udnyttet hvorimod bourgeoisiet er udnytterende.
+    </div>
+</div>
+<h2 class="overskrift" id="begivnheder">Begivenheder</h2>
+<div class="carousel-wrapper">
+<span id="item-1"></span>
+<span id="item-2"></span>
+<span id="item-3"></span>
+
+<div class="carousel-item item-1">
+  <h2>Marxisme konference 2020 - Udskudt på grund af Covid-19</h2>
+  <a class="arrow arrow-next" href="#item-3"></a>
+</div>
+
+<div class="carousel-item item-2">
+  <h2>Første maj i fælledparken 2021 - 1. maj 2021</h2>
+  <a class="arrow arrow-prev" href="#item-1"></a>
+  <a class="arrow arrow-next" href="#item-3"></a>
+</div>
+
+<div class="carousel-item item-3">
+  <h2>Landsmøde 2020 - diskussion om marxisme i det post-moderne samfund</h2>
+  <a class="arrow arrow-prev" href="#item-2"></a>
+  <a class="arrow arrow-next" href="#item-1"></a>
+
+</div>
+<script>
+
+var modal = document.getElementById("myModal");
+
+var btn = document.getElementById("myBtn");
+
+var span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+</body>
+</html>
